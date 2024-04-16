@@ -5,9 +5,12 @@ const MailSender = (name, email, rowsInserted, callback) => {
     service: "gmail",
     auth: {
       user: process.env.EMAIL,
-      pass: process.env.PASSOWRD,
+      pass: process.env.PASSWORD,
     },
   });
+
+  console.log(process.env.EMAIL);
+  console.log(process.env.PASSWORD);
 
   let emailContent = `
     <html>
@@ -25,7 +28,7 @@ const MailSender = (name, email, rowsInserted, callback) => {
               </p>
               <div style="margin-top: 20px; text-align: center;">
                 <span style="color: #2c3e50; font-family: Arial, sans-serif; font-size: 14px;">
-                  Made with <span class="heart">❤</span> by Pankaj Thakur
+                  Made with <span class="heart">❤</span> by Nishar Alam
                 </span>
               </div>
             </td>

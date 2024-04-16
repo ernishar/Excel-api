@@ -6,11 +6,14 @@ const sequelize = require("../utils/sequelize");
 const exportExcelFile = async (req, res) => {
     try {
       const query = `
-        SELECT p.ProductName, p.ID, p.SKU, p.VariantID, v.VariantName, p.Price, p.DiscountPercentage,
+        SELECT p.ProductName, p.ID, p.SKU, p.VariantID, v.VariantName, p.CategoryID p.Price, p.DiscountPercentage, c.CategoryName,
         (p.Price - (p.Price * p.DiscountPercentage / 100)) AS DiscountedPrice,
         p.Description
         FROM products AS p
-        INNER JOIN variants AS v ON p.VariantID = v.VariantID
+        INNER JOIN 
+        variants AS v ON p.VariantID = v.VariantID
+        INNER JOIN 
+        categories AS c ON p.CategoryID = c.CategoryID; 
       `;
   
       const products = await sequelize.query(query, { type: QueryTypes.SELECT });
@@ -24,8 +27,9 @@ const exportExcelFile = async (req, res) => {
       const worksheet = xlsx.utils.json_to_sheet(data);
       const workbook = xlsx.utils.book_new();
       xlsx.utils.book_append_sheet(workbook, worksheet, "Products");
+      
   
-      const filePath = __dirname + "/products.xlsx";
+      const filePath =__dirname + "/products.xlsx";
       xlsx.writeFile(workbook, filePath);
   
       res.download(filePath, "products.xlsx", (err) => {

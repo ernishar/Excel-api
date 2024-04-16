@@ -22,11 +22,11 @@ const importExcelFile = async (req, res) => {
         Description,
       } = row;
       await sequelize.query(
-        `INSERT INTO products (ProductName, ID, SKU, VariantID, Price, DiscountPercentage, Description) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO products (ProductName,  SKU, VariantID, Price, DiscountPercentage, Description) VALUES (?, ?, ?, ?, ?, ?)`,
         {
           replacements: [
             ProductName,
-            ID,
+         
             SKU,
             VariantID,
             Price,
